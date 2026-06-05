@@ -47,30 +47,25 @@ public class Main {
         scanner.close();
     }
 
-    // ─── Core slide logic ────────────────────────────────────────────────────
-
-    /**
-     * Slides and merges a single line (array of 4 values) toward index 0.
-     * Works for left-slide; other directions rotate/flip the board before calling.
-     */
+    
     static int[] slideLine(int[] line) {
-        // Step 1: compact — remove zeros, shift tiles to the left
+       
         int[] compacted = new int[SIZE];
         int pos = 0;
         for (int val : line) {
             if (val != 0) compacted[pos++] = val;
         }
 
-        // Step 2: merge adjacent equal tiles (left to right, each tile merges once)
+       
         for (int i = 0; i < SIZE - 1; i++) {
             if (compacted[i] != 0 && compacted[i] == compacted[i + 1]) {
                 compacted[i] *= 2;
                 compacted[i + 1] = 0;
-                i++; // skip merged tile so it isn't merged again
+                i++;
             }
         }
 
-        // Step 3: compact again after merges
+
         int[] result = new int[SIZE];
         pos = 0;
         for (int val : compacted) {
@@ -79,7 +74,7 @@ public class Main {
         return result;
     }
 
-    // ─── Direction handlers ───────────────────────────────────────────────────
+   
 
     static boolean slideLeft() {
         boolean moved = false;
@@ -125,7 +120,7 @@ public class Main {
         return moved;
     }
 
-    // ─── Board utilities ─────────────────────────────────────────────────────
+   
 
     static int[] getColumn(int col) {
         int[] column = new int[SIZE];
@@ -148,7 +143,7 @@ public class Main {
         return true;
     }
 
-    // ─── Tile spawning ────────────────────────────────────────────────────────
+   
 
     static void spawnTile() {
         List<int[]> emptyCells = new ArrayList<>();
@@ -163,7 +158,7 @@ public class Main {
         board[cell[0]][cell[1]] = (rand.nextInt(10) == 0) ? 4 : 2;
     }
 
-    // ─── Win / lose checks ───────────────────────────────────────────────────
+
 
     static boolean hasWon() {
         for (int[] row : board)
@@ -173,12 +168,12 @@ public class Main {
     }
 
     static boolean canMove() {
-        // Any empty cell → can move
+     
         for (int r = 0; r < SIZE; r++)
             for (int c = 0; c < SIZE; c++)
                 if (board[r][c] == 0) return true;
 
-        // Any adjacent equal pair → can merge
+        
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
                 if (r + 1 < SIZE && board[r][c] == board[r + 1][c]) return true;
@@ -188,7 +183,7 @@ public class Main {
         return false;
     }
 
-    // ─── Display ─────────────────────────────────────────────────────────────
+ 
 
     static void printBoard() {
         System.out.println("┌──────┬──────┬──────┬──────┐");
